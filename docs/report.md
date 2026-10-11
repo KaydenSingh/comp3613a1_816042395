@@ -6,13 +6,21 @@ Do not put your student ID in this file if you will commit it. The PDF cover add
 
 ## Assigned project
 
+Alumni App
+
 ## Three workflows
 
 ### 1.
 
+Manage events (professor)
+
 ### 2.
 
+Search events (public)
+
 ### 3.
+
+View friends list (public)
 
 ## Use case diagram
 
