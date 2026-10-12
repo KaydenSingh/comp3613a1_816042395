@@ -1,0 +1,29 @@
+{
+  "system": "Alumni App",
+  "actors": [
+    {"name": "Public", "side": "left"},
+    {"name": "Professor", "side": "right"}
+  ],
+  "use_cases": [
+    {
+      "name": "Search events",
+      "actors": ["Public", "Professor"],
+      "includes": ["View event details"]
+    },
+    {
+      "name": "View event details"
+    },
+    {
+      "name": "Manage events",
+      "actors": ["Professor"]
+    },
+    {
+      "name": "Connections List",
+      "actors": ["Public", "Professor"],
+      "includes": ["View user information"]
+    },
+    {
+      "name": "View user information"
+    }
+  ]
+}

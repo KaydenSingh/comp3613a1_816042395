@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Connections{% endblock %}
+
+{% block content %}
+<div class="search-page">
+  <header class="search-header">
+    <div class="container py-4">
+      <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+        <a class="brand-wordmark text-decoration-none" href="{{ dashboard_url or url_for('index_view') }}">AlumniConnect</a>
+        <nav class="d-flex align-items-center gap-3 flex-wrap">
+          <a class="text-white text-decoration-none" href="{{ dashboard_url }}">Dashboard</a>
+          <a class="text-white text-decoration-none" href="{{ url_for('search_view') }}">Events</a>
+          <a class="text-white text-decoration-none fw-semibold" href="{{ connections_url }}">Connections</a>
+          {% if user_logged_in %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">Sign out</a>
+          {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('login_view') }}">Sign in</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5">
+    <div class="search-shell">
+      <div class="search-intro mb-4">
+        <p class="section-kicker">Alumni network</p>
+        <h1 class="section-title">Connections List</h1>
+      </div>
+
+      {% if user_logged_in %}
+        {% if users %}
+        <div class="row g-4">
+          {% for person in users %}
+          <div class="col-md-6 col-xl-4">
+            <article class="event-card h-100">
+              <h2 class="event-title">
+                <a href="{{ url_for('professor_profile_view', user_id=person.id) }}" class="text-decoration-none">{{ person.full_name }}</a>
+              </h2>
+              <p class="event-location">{{ person.department or 'Department TBD' }}</p>
+              {% if person.profile_description %}
+              <p class="event-description">{{ person.profile_description }}</p>
+              {% endif %}
+              <div class="d-flex justify-content-end mt-3">
+                <form method="post" action="{{ url_for('disconnect_profile', user_id=person.id) }}">
+                  <button class="btn btn-sm btn-outline-secondary" type="submit">Disconnect</button>
+                </form>
+              </div>
+            </article>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <h2>No connections yet</h2>
+          <p>Connect with other users to see them here.</p>
+        </div>
+        {% endif %}
+      {% else %}
+      <div class="empty-state">
+        <h2>Sign in to view your connections</h2>
+        <p><a href="{{ url_for('login_view') }}">Sign in</a> to see who you're connected with.</p>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -61,30 +61,47 @@ def cmd_seed(args: argparse.Namespace) -> None:
     ensure_db_and_tables()
 
     demo_users = [
-        ("bob", "bob@example.com", "bobpass", "regular_user"),
-        ("admin", "admin@example.com", "adminpass", "admin"),
+        ("bob", "bob@example.com", "bobpass", "regular_user", "Bob", "Johnson", None, "Computer Science", "Alumni interested in networking events"),
+        ("admin", "admin@example.com", "adminpass", "admin", "Admin", "User", None, "Administration", "System administrator"),
+        ("prof_smith", "prof.smith@uwi.edu", "profsmitpass", "professor", "Jane", "Smith", None, "Computer Science", "Professor of Software Engineering"),
+        ("prof_williams", "prof.williams@uwi.edu", "profwillpass", "professor", "Michael", "Williams", None, "Mathematics", "Professor of Data Science"),
+        ("alumni_jones", "jones.alumni@example.com", "jonespass", "alumni", "Sarah", "Jones", 2022, "Computer Science", "Software Developer at TechCorp"),
+        ("alumni_lee", "lee.alumni@example.com", "leepass", "alumni", "David", "Lee", 2021, "Information Systems", "Data Analyst"),
     ]
 
     created = 0
     skipped = 0
     with get_cli_session() as session:
         repo = UserRepository(session)
-        for username, email, password, role in demo_users:
+        for user_info in demo_users:
+            if len(user_info) == 9:
+                username, email, password, role, firstname, lastname, yeargrad, dept, desc = user_info
+            else:
+                username, email, password, role = user_info[:4]
+                firstname, lastname, yeargrad, dept, desc = "", "", None, "", ""
             if repo.get_by_username(username):
                 print(f"  skip  {username} (already exists)")
                 skipped += 1
                 continue
             payload_cls = AdminCreate if role == "admin" else RegularUserCreate
-            repo.create(
-                payload_cls(
+            try:
+                user = payload_cls(
                     username=username,
                     email=email,
                     password=encrypt_password(password),
                     role=role,
+                    firstname=firstname,
+                    lastname=lastname,
+                    yeargraduated=yeargrad,
+                    department=dept,
+                    profile_description=desc,
                 )
-            )
-            print(f"  create {username} ({role})")
-            created += 1
+                repo.create(user)
+                print(f"  create {username} ({role})")
+                created += 1
+            except Exception as e:
+                print(f"  err {username}: {e}")
+
 
     print(f"Seed done — created {created}, skipped {skipped}.")
     print("Login with bob/bobpass or admin/adminpass")

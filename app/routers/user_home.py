@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi import status
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+
+from app.dependencies.auth import AuthDep
 from app.dependencies.session import SessionDep
-from app.dependencies.auth import AuthDep, IsUserLoggedIn, get_current_user, is_admin
+from app.repositories.user import UserRepository
+from app.services.user_service import UserService
 from . import router, templates
 
 
@@ -10,12 +12,18 @@ from . import router, templates
 async def user_home_view(
     request: Request,
     user: AuthDep,
-    db:SessionDep
+    db: SessionDep,
 ):
+    user_repo = UserRepository(db)
+    user_service = UserService(user_repo)
+    connections = user_service.get_connections(user.id)
+
     return templates.TemplateResponse(
-        request=request, 
+        request=request,
         name="app.html",
         context={
-            "user": user
-        }
+            "user": user,
+            "connections": connections,
+            "connection_count": len(connections),
+        },
     )

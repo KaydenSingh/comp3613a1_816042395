@@ -3,7 +3,66 @@
 
 {% block subpage_content %}
 <div class="container-fluid py-2">
-  <h1 class="h4 mb-2">Home</h1>
-  <p class="text-muted mb-0">Workflow screens replace this shell in Phase 5 implement.</p>
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <div>
+      <p class="section-kicker mb-2">Dashboard</p>
+      <h1 class="h3 mb-0">Welcome back, {{ user.firstname or user.username }}</h1>
+    </div>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-primary" href="{{ url_for('connections_list_view') }}">View connections</a>
+      <a class="btn btn-primary" href="{{ url_for('search_view') }}?query=">Events</a>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <p class="section-kicker mb-2">My network</p>
+          <h2 class="h4 mb-2">{{ connection_count }} connection{% if connection_count != 1 %}s{% endif %}</h2>
+          <p class="text-muted mb-0">Stay in touch with fellow alumni and academic collaborators.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <p class="section-kicker mb-2">Public events</p>
+          <h2 class="h4 mb-2">Event discovery</h2>
+          <p class="text-muted mb-0">Search upcoming sessions, speaker panels, and alumni meetups.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <p class="section-kicker mb-2">Profile</p>
+          <h2 class="h4 mb-2">{{ user.department or 'Department TBD' }}</h2>
+          <p class="text-muted mb-0">{{ user.profile_description or 'Update your profile to showcase your experience.' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if connections %}
+  <div class="card shadow-sm border-0 mt-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Recent connections</h2>
+        <a href="{{ url_for('connections_list_view') }}" class="btn btn-sm btn-outline-primary">View all</a>
+      </div>
+      <div class="row g-3">
+        {% for connection in connections[:3] %}
+        <div class="col-md-4">
+          <div class="border rounded-3 p-3 h-100">
+            <h3 class="h6 mb-1">{{ connection.full_name }}</h3>
+            <div class="text-muted small">{{ connection.department or 'Alumni' }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ event.event_title }}{% endblock %}
+
+{% block content %}
+<div class="search-page">
+  <header class="search-header">
+    <div class="container py-4">
+      <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+        <a class="brand-wordmark text-decoration-none" href="{{ dashboard_url or url_for('index_view') }}">AlumniConnect</a>
+        <nav class="d-flex align-items-center gap-3 flex-wrap">
+          <a class="text-white text-decoration-none" href="{{ dashboard_url }}">Dashboard</a>
+          <a class="text-white text-decoration-none fw-semibold" href="{{ url_for('search_view') }}">Events</a>
+          <a class="text-white text-decoration-none" href="{{ connections_url }}">Connections</a>
+          {% if user_logged_in %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">Sign out</a>
+          {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('login_view') }}">Sign in</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5">
+    <div class="event-detail-shell">
+      <a class="auth-back" href="{{ url_for('search_view') }}">← Events</a>
+      <article class="event-detail-card">
+        <h1 class="section-title">{{ event.event_title }}</h1>
+        <p class="event-detail-meta">{{ event.event_date }} · {{ event.time }}</p>
+        <p class="event-location">{{ event.location }}</p>
+        {% if event.keywords %}
+        <div class="event-tags mb-3">
+          {% for tag in event.keywords.split(',') %}
+            {% if tag.strip() %}
+            <span class="event-tag">{{ tag.strip() }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+        <p class="hosted-by">
+          Hosted by
+          {% if hosts %}
+            {% for host in hosts %}
+              {% if user_logged_in %}
+              <a href="{{ url_for('professor_profile_view', user_id=host.id) }}">{{ host.full_name }}</a>{% if not loop.last %}, {% endif %}
+              {% else %}
+              <a href="{{ url_for('login_view') }}">{{ host.full_name }}</a>{% if not loop.last %}, {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <span class="text-muted">Host to be announced</span>
+          {% endif %}
+        </p>
+        {% if event.description %}
+        <div class="event-detail-body">
+          <h2 class="h6 text-uppercase text-muted">Description</h2>
+          <p>{{ event.description }}</p>
+        </div>
+        {% endif %}
+      </article>
+    </div>
+  </main>
+</div>
+{% endblock %}

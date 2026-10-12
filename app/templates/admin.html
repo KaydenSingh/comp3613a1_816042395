@@ -3,7 +3,84 @@
 
 {% block subpage_content %}
 <div class="container-fluid py-2">
-  <h1 class="h4 mb-2">Admin</h1>
-  <p class="text-muted mb-0">Admin workflow screens replace this shell in Phase 5 implement.</p>
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <div>
+      <p class="section-kicker mb-2">Dashboard</p>
+      <h1 class="h3 mb-0">Manage Events</h1>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <h2 class="h5 mb-3">Create event</h2>
+      <form method="post" action="{{ url_for('create_admin_event') }}" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="event_title">Event title</label>
+          <input class="form-control" id="event_title" name="event_title" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" id="location" name="location" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="event_date">Date</label>
+          <input class="form-control" type="date" id="event_date" name="event_date" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="time">Time</label>
+          <input class="form-control" type="time" id="time" name="time" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="keywords">Keywords</label>
+          <input class="form-control" id="keywords" name="keywords" placeholder="networking, career, alumni">
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="description">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-primary" type="submit">Publish event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h2 class="h5 mb-3">My events</h2>
+      {% if events %}
+      <div class="row g-4">
+        {% for event in events %}
+        <div class="col-md-6 col-xl-4">
+          <article class="event-card h-100">
+            <div class="event-card-header">
+              <span class="event-date">{{ event.event_date }}</span>
+              <span class="event-time">{{ event.time }}</span>
+            </div>
+            <h2 class="event-title">
+              <a href="{{ url_for('event_detail_view', eventid=event.eventid) }}" class="text-decoration-none">{{ event.event_title }}</a>
+            </h2>
+            <p class="event-location">{{ event.location }}</p>
+            {% if event.keywords %}
+            <div class="event-tags">
+              {% for tag in event.keywords.split(',') %}
+                {% if tag.strip() %}
+                <span class="event-tag">{{ tag.strip() }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </article>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <h2>No events published yet</h2>
+        <p>Use the form above to create your first event.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
 {% endblock %}

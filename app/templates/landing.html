@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}FastStarter{% endblock %}
+{% block title %}AlumniConnect{% endblock %}
 
 {% block content %}
 <div class="landing">
@@ -7,7 +7,7 @@
   <div class="landing-orb landing-orb-2" aria-hidden="true"></div>
 
   <header class="landing-nav">
-    <a class="brand-wordmark" href="{{ url_for('index_view') }}">FastStarter</a>
+    <a class="brand-wordmark" href="{{ app_home }}">AlumniConnect</a>
     <div class="landing-nav-actions">
       {% if user_logged_in %}
       <a class="btn-landing btn-landing-ghost" href="{{ app_home }}">Open app</a>
@@ -20,24 +20,25 @@
   </header>
 
   <main class="landing-hero">
-    <p class="landing-kicker">Coursework starter</p>
-    <h1 class="brand-wordmark">FastStarter</h1>
+    <p class="landing-kicker">UWI DCIT Alumni Network</p>
+    <h1 class="brand-wordmark">AlumniConnect</h1>
     <p class="landing-lead">
-      A placeholder landing page for your COMP 3613 app.
-      Phase 5 theming replaces these colors, type, and copy with your brand.
+      Discover department events, reconnect with your alumni network,
+      and manage meaningful academic-community engagement in one place.
     </p>
     <div class="landing-cta">
+      <a class="btn-landing btn-landing-ghost" href="{{ url_for('search_view') }}">Search events</a>
       {% if user_logged_in %}
       <a class="btn-landing btn-landing-primary" href="{{ app_home }}">Continue to app</a>
       {% else %}
-      <a class="btn-landing btn-landing-primary" href="{{ url_for('register_view') }}">Create account</a>
+      <a class="btn-landing btn-landing-primary" href="{{ url_for('register_view') }}">Create alumni account</a>
       <a class="btn-landing btn-landing-ghost" href="{{ url_for('login_view') }}">Sign in</a>
       {% endif %}
     </div>
   </main>
 
   <footer class="landing-foot">
-    Demo logins after <code>python manage.py init</code>: bob / bobpass · admin / adminpass
+    Professional alumni engagement platform for events and verified connections.
   </footer>
 </div>
 {% endblock %}

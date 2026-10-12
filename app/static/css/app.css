@@ -1,16 +1,16 @@
 :root {
   /* Phase 5 theming: Guide overwrites these from docs/report.md preferences */
-  --brand-name: "FastStarter";
-  --brand-bg: #0c1218;
-  --brand-surface: #f7f4ef;
-  --brand-ink: #14202b;
-  --brand-muted: #6a7a88;
-  --brand-accent: #c45c26;
-  --brand-accent-2: #2a6f6b;
-  --brand-sidebar: #14202b;
-  --brand-sidebar-text: #a8b4bf;
-  --brand-font-display: "Fraunces", Georgia, serif;
-  --brand-font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --brand-name: "AlumniConnect";
+  --brand-bg: #0f1c2e;
+  --brand-surface: #f6f9ff;
+  --brand-ink: #1f2937;
+  --brand-muted: #5f6f86;
+  --brand-accent: #1f4e8c;
+  --brand-accent-2: #2f6fb5;
+  --brand-sidebar: #17263d;
+  --brand-sidebar-text: #c0cfdf;
+  --brand-font-display: "Merriweather", Georgia, serif;
+  --brand-font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
   --brand-radius: 0.85rem;
 }
 
@@ -271,3 +271,132 @@ body {
 .auth-back:hover {
   color: var(--brand-accent);
 }
+
+.search-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #eef5ff 0%, #f9fbff 100%);
+  color: var(--brand-ink);
+}
+
+.search-header {
+  background: linear-gradient(135deg, var(--brand-accent) 0%, var(--brand-sidebar) 100%);
+  color: var(--brand-surface);
+}
+
+.search-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-kicker {
+  margin: 0 0 0.5rem;
+  color: var(--brand-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+  font-family: var(--brand-font-display);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+}
+
+.search-form {
+  max-width: 760px;
+}
+
+.event-card {
+  background: #fff;
+  border: 1px solid rgba(31, 78, 140, 0.1);
+  border-radius: var(--brand-radius);
+  padding: 1.25rem;
+  box-shadow: 0 10px 25px rgba(15, 28, 46, 0.08);
+}
+
+.event-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--brand-accent);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.event-title {
+  margin: 0 0 0.45rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.event-location {
+  margin: 0 0 0.85rem;
+  color: var(--brand-muted);
+  font-weight: 600;
+}
+
+.event-description {
+  color: var(--brand-ink);
+  line-height: 1.6;
+  margin: 0 0 0.9rem;
+}
+
+.event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.event-tag {
+  display: inline-block;
+  background: rgba(31, 78, 140, 0.08);
+  color: var(--brand-accent);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.empty-state {
+  background: #fff;
+  border-radius: var(--brand-radius);
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(31, 78, 140, 0.1);
+}
+
+.event-detail-shell {
+  max-width: 760px;
+}
+
+.event-detail-card,
+.profile-card {
+  background: #fff;
+  border-radius: var(--brand-radius);
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(15, 28, 46, 0.08);
+  border: 1px solid rgba(31, 78, 140, 0.1);
+}
+
+.event-detail-meta {
+  color: var(--brand-accent);
+  font-weight: 700;
+  margin: 1rem 0 0.35rem;
+}
+
+.hosted-by {
+  margin: 0 0 1.5rem;
+  font-weight: 600;
+}
+
+.hosted-by a {
+  color: var(--brand-accent);
+}
+
+.event-detail-body p {
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+

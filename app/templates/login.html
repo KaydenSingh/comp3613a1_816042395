@@ -5,8 +5,8 @@
 <div class="auth-shell">
   <div class="auth-panel">
     <a class="auth-back" href="{{ url_for('index_view') }}">← Home</a>
-    <div class="brand-wordmark">FastStarter</div>
-    <p class="auth-tagline">Sign in to continue</p>
+    <div class="brand-wordmark">AlumniConnect</div>
+    <p class="auth-tagline">Sign in to access your alumni network</p>
 
     <form method="POST" action="{{ url_for('login_action_ajax') }}">
       <div class="mb-3">
@@ -19,7 +19,7 @@
       </div>
       <div class="d-grid gap-2 mb-3">
         <button class="btn btn-primary btn-lg" type="submit">Sign in</button>
-        <a class="btn btn-outline-secondary" href="{{ url_for('register_view') }}">Create an account</a>
+        <a class="btn btn-outline-secondary" href="{{ url_for('register_view') }}">Create alumni account</a>
       </div>
     </form>
 

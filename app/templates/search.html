@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Search Events{% endblock %}
+
+{% block content %}
+<div class="search-page">
+  <header class="search-header">
+    <div class="container py-4">
+      <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+        <a class="brand-wordmark text-decoration-none" href="{{ dashboard_url or url_for('index_view') }}">AlumniConnect</a>
+        <nav class="d-flex align-items-center gap-3 flex-wrap">
+          <a class="text-white text-decoration-none" href="{{ dashboard_url }}">Dashboard</a>
+          <a class="text-white text-decoration-none fw-semibold" href="{{ url_for('search_view') }}">Events</a>
+          <a class="text-white text-decoration-none" href="{{ connections_url }}">Connections</a>
+          {% if user_logged_in %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('logout') }}">Sign out</a>
+          {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('login_view') }}">Sign in</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5">
+    <div class="search-shell">
+      <div class="search-intro mb-4">
+        <p class="section-kicker">Public directory</p>
+        <h1 class="section-title">Search events</h1>
+      </div>
+
+      <form method="get" action="{{ url_for('search_view') }}" class="search-form mb-4">
+        <div class="input-group input-group-lg">
+          <input
+            type="text"
+            class="form-control"
+            name="query"
+            value="{{ query or '' }}"
+            placeholder="Search by title, location, keyword, or description"
+            aria-label="Search events"
+          >
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </form>
+
+      {% if events %}
+      <div class="row g-4">
+        {% for event in events %}
+        <div class="col-md-6 col-xl-4">
+          <article class="event-card h-100">
+            <div class="event-card-header">
+              <span class="event-date">{{ event.event_date }}</span>
+              <span class="event-time">{{ event.time }}</span>
+            </div>
+            <h2 class="event-title">{{ event.event_title }}</h2>
+            <p class="event-location">{{ event.location }}</p>
+            {% if event.keywords %}
+            <div class="event-tags">
+              {% for tag in event.keywords.split(',') %}
+                {% if tag.strip() %}
+                <span class="event-tag">{{ tag.strip() }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+            <div class="d-flex justify-content-end mt-3">
+              <a class="btn btn-sm btn-primary" href="{{ url_for('event_detail_view', eventid=event.eventid) }}">View</a>
+            </div>
+          </article>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <h2>No events found</h2>
+        <p>Try another search term or browse the alumni calendar later.</p>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+</div>
+{% endblock %}

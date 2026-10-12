@@ -1,0 +1,33 @@
+@startuml
+!pragma layout smetana
+skinparam shadowing false
+skinparam actorBorderColor #1B365D
+skinparam actorFontColor #1E232D
+skinparam usecaseBackgroundColor #FFFFFF
+skinparam usecaseBorderColor #1B365D
+skinparam usecaseFontColor #1E232D
+skinparam rectangleBorderColor #1B365D
+skinparam rectangleBackgroundColor #F8FAFC
+skinparam arrowColor #1B365D
+
+actor "Public" as Public
+
+rectangle "Alumni App" {
+  usecase "Search events" as Search_events
+  usecase "View event details" as View_event_details
+  usecase "Manage events" as Manage_events
+  usecase "Connections List" as Connections_List
+  usecase "View user information" as View_user_information
+}
+
+actor "Professor" as Professor
+
+Public --> Search_events
+Search_events <-- Professor
+Search_events ..> View_event_details : <<include>>
+Manage_events <-- Professor
+Public --> Connections_List
+Connections_List <-- Professor
+Connections_List ..> View_user_information : <<include>>
+
+@enduml
