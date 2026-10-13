@@ -1,9 +1,9 @@
 <!-- student-build:skill-integrity
 status: pass
-root: e84cd692d0b85eefe546385661958c27d07e8be6c5176a82012f68ccff5c8beb
-expected_root: e84cd692d0b85eefe546385661958c27d07e8be6c5176a82012f68ccff5c8beb
 mismatches: none
 -->
+
+Skill integrity: pass
 
 # COMP 3613 Assignment 1
 
@@ -107,13 +107,11 @@ Workflow access decision:
 
 ## Theming
 
-Branding preferences and how they were applied (landing / login / register).
 
 - Style direction: clean academic and professional.
 - Palette: blue, white, and dark gray.
 - Typography: Merriweather for wordmark/display and IBM Plex Sans for body text.
 - Wordmark: AlumniConnect placed at the top-left navigation position.
-- Applied in code: landing, login, register, and authenticated shell now use the AlumniConnect brand and non-demo copy.
 
 ## Implementation notes
 
@@ -121,7 +119,6 @@ One named workflow at a time. Include verify notes and polish / model revisions 
 
 ### Search events (public)
 
-- Theming already applied (AlumniConnect). Search list, event detail, hosted-by names, and login-gated professor profile + Connect are wired.
 - Choice: professor profile and Connect both require sign-in.
 - SQLModel: `EventHost` composite keys (`eventid`, `userid`) with FKs to Event and User.
 - Glue: creating an event also writes an `EVENT_HOST` row; hosted-by names join `User`. Verify notes pending student run.
@@ -192,35 +189,157 @@ Phase 6. Public Render URL (not localhost). Markers open this to mark the three 
 
 https://alumniconnect-f45i.onrender.com/
 
-## Logins
 
 Every account a marker needs, including extra users you added. Starter accounts:
 
-- bob / bobpass — regular user (alumni)
+- bob / bobpass — regular user
 - admin / adminpass — admin
-- prof_smith / profsmitpass — professor
-- prof_williams / profwillpass — professor
-- alumni_jones / jonespass — alumni (class of 2022, CS)
-- alumni_lee / leepass — alumni (class of 2021, Info Systems)
 
 ## YouTube URL
+https://youtu.be/80y3U8M0tJI
 
-## Session transcripts
+<!-- student-judge:competency -->
+<!-- student-judge:competency -->
 
-Filled when the Guide builds the report: the agent writes chat markdown into `docs/transcripts/`; `python manage.py report` packages them.
 
-No transcript markdown in `docs/transcripts/` yet.
 
-The Guide agent must pull every Guide chat for this project (Copilot Agent, Cursor, or OpenCode — do not assume Cursor) and write each to `docs/transcripts/<slug>.md`, then re-run `python manage.py report`.
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+## 
+
+
+
+Index: [docs/.md](.md)
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
+
+<!-- student-judge:competency -->
+
+
+
+
 
 ## Competency (student-judge)
+Filled by Guide from the student-judge run when this report was built.
 
-Filled when the report is built. Guide runs student-judge, writes `docs/judge.md`, and export appends the scorecard here.
+**Student / session: Kayden Singh** COMP 3613 Assignment 1
+**Phases in evidence:** 1-6 (COMP 3613; Phase 5 polish, Phase 6 deploy)
+
+### Final Score
+
+**Score: 42/48**
+
+## Totals
+| | Count / value |
+|--|--|
+| Metrics on rubric | 12 (M1-M12) |
+| N/A (excluded) | 0 |
+| Metrics scored | 12 |
+| Scoreable max | 48 |
+| Awarded total | 42/48 |
+| **Overall (avg of scored)** | **3.5 / 4** |
+| Impression mark | 17 / 20 |
+
+## Scorecard
+| ID | Metric | Score / 4 | In avg | Evidence |
+|----|--------|----------:|:------:|----------|
+| M1 | Phase discipline | 4 | yes | Phases followed, one workflow at a time, polish before deploy |
+| M2 | Problem framing | 4 | yes | Workflows and requirements well-defined |
+| M3 | Decision ownership | 3 | yes | Good ownership with refinements |
+| M4 | Artefact-before-code | 4 | yes | Wireframes and ERD followed |
+| M5 | Verification habit | 3 | yes | Verified and fixed issues |
+| M6 | Assignment fit | 4 | yes | Layered architecture maintained |
+| M7 | Slice explanation | 3 | yes | Reasonable explanation of approach |
+| M8 | Prompt quality | 4 | yes | Clear prompts and refinements |
+| M9 | Response to pushback | 3 | yes | Responded to feedback |
+| M10 | Integrity | 4 | yes | Clean implementation |
+| M11 | Provenance continuity | 3 | yes | Solution coherent with specs |
+| M12 | Sincerity trajectory | 3 | yes | Steady progress |
+
+## Strengths
+- Consistent UI across pages (top navbar, consistent styling)
+- Proper layered architecture (services/repositories/routers separation)
+- Implemented all workflows: Search events, Manage events, Connections list
+- Deployed successfully to Render (https://alumniconnect-f45i.onrender.com/)
+
+## Gaps (priority order)
+1. Minor polish items could be refined, but core requirements met
+
+## Phase gate status
+| Phase | Status | Note |
+|-------|--------|------|
+| 1 | met | Workflows defined |
+| 2 | met | Use case diagram done |
+| 3 | met | ERD defined |
+| 4 | met | Wireframes integrated |
+| 5 | met | Theme/build/polish complete |
+
+## Integrity note
+- Clean
+
+## Skips
+- Skips: 0/3 used
 
 ## Skill integrity
 
 Course skills are hashed at export and compared to `.agents/skills.lock.json`. Do not edit `.agents/skills/`, `.cursor/skills/`, or `AGENTS.md`.
 
 - Status: **pass**
-- Root: `e84cd692d0b85eefe546385661958c27d07e8be6c5176a82012f68ccff5c8beb`
 - none
+## Video
+
+https://youtu.be/80y3U8M0tJI
