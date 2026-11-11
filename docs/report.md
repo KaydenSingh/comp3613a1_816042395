@@ -199,6 +199,22 @@ Every account a marker needs, including extra users you added. Starter accounts:
 https://youtu.be/80y3U8M0tJI
 
 <!-- student-judge:competency -->
+
+## Assignment 2 testing deliverables
+
+The Assignment 2 test plan is in [`testing-plan.md`](testing-plan.md), with
+focused pytest unit and integration coverage in `tests/unit/` and
+`tests/integration/`. The suite covers current validation, authentication,
+connections, event search/details, health, and the existing users API without
+adding application features.
+
+The runnable Postman collection is
+[`postman/AlumniConnect.postman_collection.json`](../postman/AlumniConnect.postman_collection.json).
+It tests the existing HTTP routes in execution order: health, users API,
+admin login, event creation, event search, and the missing-event response.
+
+Student-specific names, IDs, screenshots, and presentation evidence cannot be
+generated from repository code and remain submission inputs.
 <!-- student-judge:competency -->
 
 
