@@ -1,0 +1,311 @@
+{
+  "info": {
+    "_postman_id": "f6f207f5-4d7e-44e4-9d42-6a93d3bcd3c4",
+    "name": "AlumniConnect Assignment 2 API Tests",
+    "description": "Runnable checks for the existing AlumniConnect health, users, search, login, and event-management routes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"Request completed\", function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 303, 404]);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "admin_username",
+      "value": "admin"
+    },
+    {
+      "key": "admin_password",
+      "value": "adminpass"
+    },
+    {
+      "key": "event_title",
+      "value": ""
+    }
+  ],
+  "protocolProfileBehavior": {
+    "followRedirects": false
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Health endpoint returns ok\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.json()).to.eql({ ok: true });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List users API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Users API returns a list\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    const users = pm.response.json();",
+              "    pm.expect(users).to.be.an(\"array\");",
+              "    if (users.length > 0) {",
+              "        pm.expect(users[0]).to.not.have.property(\"password\");",
+              "    }",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login as admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "{{admin_username}}",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "{{admin_password}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login redirects to the admin page\", function () {",
+              "    pm.response.to.have.status(303);",
+              "    pm.expect(pm.response.headers.get(\"location\")).to.include(\"/admin\");",
+              "});",
+              "pm.test(\"Login sets an access token\", function () {",
+              "    pm.expect(pm.cookies.has(\"access_token\")).to.eql(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create event as admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "event_title",
+              "value": "{{generated_event_title}}",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Created by the Assignment 2 Postman collection.",
+              "type": "text"
+            },
+            {
+              "key": "event_date",
+              "value": "2026-12-01",
+              "type": "text"
+            },
+            {
+              "key": "time",
+              "value": "6:00 PM",
+              "type": "text"
+            },
+            {
+              "key": "location",
+              "value": "Main Hall",
+              "type": "text"
+            },
+            {
+              "key": "keywords",
+              "value": "alumni,networking",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/admin/events/create",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "admin",
+            "events",
+            "create"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.variables.set(\"generated_event_title\", \"Postman Alumni Event \" + Date.now());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Event creation redirects to admin\", function () {",
+              "    pm.response.to.have.status(303);",
+              "    pm.expect(pm.response.headers.get(\"location\")).to.include(\"/admin\");",
+              "});",
+              "pm.collectionVariables.set(\"event_title\", pm.variables.get(\"generated_event_title\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search for created event",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/search?query={{event_title}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "search"
+          ],
+          "query": [
+            {
+              "key": "query",
+              "value": "{{event_title}}"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Search page returns successfully\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    pm.expect(pm.response.text()).to.include(pm.collectionVariables.get(\"event_title\"));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Missing event returns 404",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/search/events/999999999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "search",
+            "events",
+            "999999999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Unknown event returns 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -152,6 +152,24 @@ The app binds `0.0.0.0` and reads `PORT` when Render sets it. Locally it uses `A
 
 ---
 
+## Assignment 2 tests
+
+The focused pytest suite is in `tests/unit/` and `tests/integration/`. It uses
+an isolated in-memory SQLite database and does not modify the development
+database:
+
+```powershell
+python -m pytest -q
+```
+
+The test plan is documented in [`docs/testing-plan.md`](docs/testing-plan.md).
+The runnable Postman collection is
+[`postman/AlumniConnect.postman_collection.json`](postman/AlumniConnect.postman_collection.json).
+Start the app with `python manage.py run`, import the collection, and run it
+in order against `http://127.0.0.1:5000`.
+
+---
+
 ## Deploy (Render MCP)
 
 **Phase 6** — only after Phase 5 polish (named workflows work locally and you have steered UI/workflow/model refinements). Deploy a **Postgres database** and the **web app** on Render’s free plan. Agents talk to Render through the [Render MCP server](https://render.com/docs/mcp-server) (`https://mcp.render.com/mcp`). This repo already ships the MCP config for each supported agent — do **not** paste an API key into a committed file. Do not put the **database** password in the report or the video. **App** usernames and passwords belong in `docs/report.md`.
